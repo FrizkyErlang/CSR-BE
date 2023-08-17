@@ -7,7 +7,7 @@ router.use(bodyParser.json())
 
 // api router
 
-const bootcampController = require('./bootcamp/index');
-router.use('/bootcamp', bootcampController);
+const todoController = require('./todo_modules/index');
+router.use('/todo', todoController);
 
 module.exports = router;
