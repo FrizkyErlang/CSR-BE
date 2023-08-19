@@ -1,5 +1,5 @@
 const Todo = require("./model");
-const { Types, ObjectId } = require("mongoose");
+const { Types } = require("mongoose");
 
 exports.getTodo = async (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ exports.getTodo = async (req, res, next) => {
     //do the query
     let result = await Todo.find(query);
 
-    res.status(200).json({ result });
+    res.send({ result });
   } catch (err) {
     console.log(err);
     res.status(err.statusCode).send(err.message);
@@ -29,7 +29,7 @@ exports.getTodoById = async (req, res, next) => {
     //do the query
     let result = await Todo.findById(todoId);
 
-    res.status(200).json({ result });
+    res.send({ result });
   } catch (err) {
     console.log(err);
     res.status(err.statusCode).send(err.message);
@@ -40,19 +40,15 @@ exports.getTodoById = async (req, res, next) => {
 exports.createTodo = async (req, res, next) => {
   try {
     let todo = req.body;
-    // check the required fields
-    if (!todo.text || !(todo.isCompleted + "")) {
-      return res.status(400).send("Missing required fields");
-    }
 
     // set the _id
-    todo._id = new ObjectId();
+    todo._id = new Types.ObjectId();
 
     // save to collection
     let result = await Todo.create(todo);
     result.data = todo;
 
-    res.status(200).json({ status: "Todo created", result });
+    res.send({ status: "Todo created", result });
   } catch (err) {
     console.log(err);
     res.status(err.statusCode).send(err.message);
@@ -72,7 +68,7 @@ exports.deleteTodo = async (req, res, next) => {
       return res.status(404).send("Todo not found");
     }
 
-    res.status(200).json({ status: "Todo deleted", result });
+    res.send({ status: "Todo deleted", result });
   } catch (err) {
     console.log(err);
     res.status(err.statusCode).send(err.message);
@@ -80,4 +76,23 @@ exports.deleteTodo = async (req, res, next) => {
   }
 };
 
-exports.updateTodo;
+exports.updateTodo = async (req, res, next) => {
+  try {
+    let todoId = req.params.id;
+    let todoUp = req.body;
+
+    // update the todo
+    let result = await Todo.findByIdAndUpdate(todoId, todoUp, { new: true });
+
+    // if not found
+    if (!result) {
+      return res.status(404).send("Todo not found");
+    }
+
+    res.send({ status: "Todo deleted", result });
+  } catch (err) {
+    console.log(err);
+    res.status(err.statusCode).send(err.message);
+    next();
+  }
+};
