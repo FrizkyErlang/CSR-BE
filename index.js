@@ -37,12 +37,12 @@ mongoose
   .then(() => {
     console.log("DB Connected Successfully");
   })
-  .catch((error) => {
+  .catch(error => {
     console.log(`DB Fail to Connect: ${error}`);
   });
 const db = mongoose.connection;
 // check for error
-db.on("error", (err) => {
+db.on("error", err => {
   console.log(err);
 });
 // close the DB
