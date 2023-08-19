@@ -3,7 +3,7 @@ const router = express.Router();
 const mongo = require('mongojs');
 
 console.log(process.env.DB_URL)
-const db = mongo(process.env.DB_URL, ['todos'])
+const db = mongo(`${process.env.DB_URL}/CSR`, ['todos'])
 
 router.get('/', function(req, res, next){
     let query = {};
