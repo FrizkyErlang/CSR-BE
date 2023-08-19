@@ -7,7 +7,10 @@ const router = express.Router();
 
 router.route("/").get(todoController.getTodo).post(todoController.createTodo);
 
-router.route("/:id").delete(todoController.deleteTodo);
+router
+  .route("/:id")
+  .get(todoController.getTodoById)
+  .delete(todoController.deleteTodo);
 
 router.put("/:id", function (req, res, next) {
   let todo = req.body;
