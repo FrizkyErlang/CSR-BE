@@ -13,6 +13,7 @@ const todoScheme = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  updatedAt: Date,
 });
 
 todoScheme.pre(/^find/, function (next) {

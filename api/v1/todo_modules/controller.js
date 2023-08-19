@@ -80,6 +80,7 @@ exports.updateTodo = async (req, res, next) => {
   try {
     let todoId = req.params.id;
     let todoUp = req.body;
+    todoUp.updateAt = new Date();
 
     // update the todo
     let result = await Todo.findByIdAndUpdate(todoId, todoUp, { new: true });
