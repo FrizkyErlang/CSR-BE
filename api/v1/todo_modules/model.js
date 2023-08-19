@@ -15,6 +15,11 @@ const todoScheme = new mongoose.Schema({
   },
 });
 
+todoScheme.pre(/^find/, function (next) {
+  this.select("-__v");
+  next();
+});
+
 const Todo = mongoose.model("todos", todoScheme);
 
 module.exports = Todo;
