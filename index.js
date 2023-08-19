@@ -1,3 +1,7 @@
+if (!process.env.ENV) {
+    require('dotenv').config()
+}
+
 const express = require('express');
 const bodyParser = require('body-parser');
 

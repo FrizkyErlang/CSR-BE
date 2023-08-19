@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongo = require('mongojs');
-const db = mongo('mongodb+srv://frizky:TelZRu4jzaFshKtE@csr.inapr8y.mongodb.net/csr?retryWrites=true&w=majority', ['todos'])
+
+console.log(process.env.DB_URL)
+const db = mongo(process.env.DB_URL, ['todos'])
 
 router.get('/', function(req, res, next){
     let query = {};
