@@ -9,6 +9,10 @@ const todoScheme = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  timeStamps: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const Todo = mongoose.model("todos", todoScheme);

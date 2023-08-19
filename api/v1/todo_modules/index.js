@@ -5,7 +5,11 @@ const router = express.Router();
 
 // const db = mongo(`${process.env.DB_URL}/CSR`, ["todos"]);
 
-router.route("/").get(todoController.getTodo);
+router
+  .route("/")
+  .get(todoController.getTodo)
+  .post(todoController.createTodo)
+  .delete(todoController.deleteTodo);
 
 router.post("/", function (req, res, next) {
   let todo = req.body;
@@ -48,21 +52,6 @@ router.put("/:id", function (req, res, next) {
       }
     );
   }
-});
-
-router.delete("/:id", function (req, res, next) {
-  db.todos.remove(
-    {
-      _id: db.ObjectId(req.params.id),
-    },
-    function (err, result) {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(result);
-      }
-    }
-  );
 });
 
 module.exports = router;
